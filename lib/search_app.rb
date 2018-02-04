@@ -4,9 +4,12 @@
   "utils/user_searcher.rb",
 ].each { |f| require_relative "#{f}" }
 
+require 'json'
+
 module SearchApp
   class << self
     def start
+      load_data
       print_welcome
 
       while true
@@ -34,6 +37,20 @@ module SearchApp
     SEARCH_OPTION = '1'.freeze
     LIST_OPTION = '2'.freeze
     QUIT_OPTION = 'quit'.freeze
+
+    SEARCH_USER = '1'.freeze
+    SEARCH_TICKET = '2'.freeze
+    SEARCH_ORGANISATION = '3'.freeze
+
+    def load_data
+      organisation_json = JSON.load(File.read('data/organizations.json'))
+      ticket_json = JSON.load(File.read('data/tickets.json'))
+      user_json = JSON.load(File.read('data/users.json'))
+
+      OrganisationSearcher.load_data(organisation_json)
+      TicketSearcher.load_data(ticket_json)
+      UserSearcher.load_data(user_json)
+    end
 
     def get_input
       gets.chomp.downcase
