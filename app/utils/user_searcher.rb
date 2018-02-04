@@ -1,4 +1,8 @@
+require_relative 'searcher'
+
 class UserSearcher
+  include Searcher
+
   class << self
     def searchable_fields
       %w(
@@ -21,6 +25,12 @@ class UserSearcher
         tags
         suspended
         role
+      )
+    end
+
+    def array_fields
+      %w(
+        tags
       )
     end
   end

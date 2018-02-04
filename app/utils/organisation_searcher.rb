@@ -1,23 +1,7 @@
+require_relative 'searcher'
+
 class OrganisationSearcher
-  def initialize(data)
-    @data = data
-  end
-
-  def search(field, value)
-    if array_field?(field)
-      data.select{ |u| u[field].include?(value) }
-    else
-      data.select{ |u| u[field] == value }
-    end
-  end
-
-  private
-
-  def array_field?(field)
-    self.class.array_fields.include?(field)
-  end
-
-  attr_reader :data
+  include Searcher
 
   class << self
     def searchable_fields
