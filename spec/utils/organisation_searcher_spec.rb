@@ -24,7 +24,7 @@ RSpec.describe OrganisationSearcher do
   end
 
   describe '#search' do
-    let(:organisations_json) {
+    let(:json) {
       <<-JSON
         [
           {
@@ -94,7 +94,7 @@ RSpec.describe OrganisationSearcher do
       JSON
     }
 
-    let(:data) { JSON.load(organisations_json) }
+    let(:data) { JSON.load(json) }
 
     context 'strings' do
       it 'returns matches on string fields' do

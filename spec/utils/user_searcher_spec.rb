@@ -34,7 +34,7 @@ RSpec.describe UserSearcher do
   end
 
   describe '#search' do
-    let(:users_json) {
+    let(:json) {
       <<-JSON
         [
           {
@@ -119,7 +119,7 @@ RSpec.describe UserSearcher do
       JSON
     }
 
-    let(:data) { JSON.load(users_json) }
+    let(:data) { JSON.load(json) }
 
     context 'strings' do
       it 'returns matches on string fields' do
