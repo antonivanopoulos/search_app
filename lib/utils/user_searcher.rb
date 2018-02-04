@@ -4,6 +4,10 @@ class UserSearcher
   include Searcher
 
   class << self
+    def model_name
+      'User'
+    end
+
     def searchable_fields
       %w(
         _id

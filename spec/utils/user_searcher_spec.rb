@@ -1,10 +1,16 @@
 [
-  "app/utils/user_searcher.rb",
+  "lib/utils/user_searcher.rb",
 ].each { |f| require_relative "../../#{f}" }
 
 require 'json'
 
 RSpec.describe UserSearcher do
+  describe '.model_name' do
+    it 'returns the name of the model were searching' do
+      expect(described_class.model_name).to eq 'User'
+    end
+  end
+
   describe '.searchable_fields' do
     let(:searchable_fields) { %w(
       _id

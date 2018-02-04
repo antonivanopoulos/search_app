@@ -4,6 +4,10 @@ class OrganisationSearcher
   include Searcher
 
   class << self
+    def model_name
+      'Organisation'
+    end
+
     def searchable_fields
       %w(
         _id

@@ -1,10 +1,16 @@
 [
-  "app/utils/ticket_searcher.rb",
+  "lib/utils/ticket_searcher.rb",
 ].each { |f| require_relative "../../#{f}" }
 
 require 'json'
 
 RSpec.describe TicketSearcher do
+  describe '.model_name' do
+    it 'returns the name of the model were searching' do
+      expect(described_class.model_name).to eq 'Ticket'
+    end
+  end
+
   describe '.searchable_fields' do
     let(:searchable_fields) { %w(
       _id

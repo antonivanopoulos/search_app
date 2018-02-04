@@ -4,6 +4,10 @@ class TicketSearcher
   include Searcher
 
   class << self
+    def model_name
+      'Ticket'
+    end
+
     def searchable_fields
       %w(
         _id
