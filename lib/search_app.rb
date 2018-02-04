@@ -26,8 +26,7 @@ module SearchApp
           print_goodbye
           exit
         else
-          puts "wrong"
-          puts ""
+          print_error_message('Invalid option')
         end
       end
     end
@@ -85,6 +84,7 @@ module SearchApp
         puts "Enter search value"
         value = get_input
 
+        # Should probably validate that the field is available and let the user know?
         puts "Searching #{searcher.model_name.downcase}s for #{field} with a value of #{value}"
         results = searcher.search(field, value).map { |r| searcher.find_associations(r) }
 
@@ -97,7 +97,7 @@ module SearchApp
           puts ""
         end
       else
-        puts "Invalid parameters"
+        print_error_message('Invalid data type')
       end
     end
 
@@ -136,8 +136,11 @@ module SearchApp
     end
 
     def print_goodbye
-      puts ""
       puts "Exiting. Goodbye!"
+    end
+
+    def print_error_message(message)
+      puts 'ERROR: ' + message
     end
   end
 end
