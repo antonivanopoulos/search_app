@@ -17,7 +17,7 @@ Search App requires ruby and bundler to be installed. Before you begin; install 
 
 # Tests
 
-To run the test suite, you can run the comman `bundle exec rspec`.
+To run the test suite, you can run the command `bundle exec rspec`.
 
 
 
