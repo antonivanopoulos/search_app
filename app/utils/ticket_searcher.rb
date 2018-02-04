@@ -1,4 +1,8 @@
+require_relative 'searcher'
+
 class TicketSearcher
+  include Searcher
+
   class << self
     def searchable_fields
       %w(
@@ -18,6 +22,12 @@ class TicketSearcher
         has_incidents
         due_at
         via
+      )
+    end
+
+    def array_fields
+      %w(
+        tags
       )
     end
   end
