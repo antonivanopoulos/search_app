@@ -8,6 +8,23 @@ class UserSearcher
       'User'
     end
 
+    def find_associations(result)
+      result.tap do |r|
+        organisation = OrganisationSearcher.find(r['organization_id'])
+        if organisation
+          r['organisation_name'] = organisation['name']
+        end
+
+        TicketSearcher.search('submitter_id', r['_id']).each_with_index do |t, i|
+          r["submitted_ticket_#{i}"] = t['subject']
+        end
+
+        TicketSearcher.search('assignee_id', r['_id']).each_with_index do |t, i|
+          r["assigned_ticket_#{i}"] = t['subject']
+        end
+      end
+    end
+
     def searchable_fields
       %w(
         _id
@@ -29,6 +46,13 @@ class UserSearcher
         tags
         suspended
         role
+      )
+    end
+
+    def int_fields
+      %w(
+        _id
+        organization_id
       )
     end
 

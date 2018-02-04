@@ -22,6 +22,12 @@ class OrganisationSearcher
       )
     end
 
+    def int_fields
+      %w(
+        _id
+      )
+    end
+
     def array_fields
       %w(
         domain_names
