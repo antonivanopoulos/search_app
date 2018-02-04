@@ -1,4 +1,5 @@
 [
+  "factories/searchable_factory.rb",
   "utils/organisation_searcher.rb",
   "utils/ticket_searcher.rb",
   "utils/user_searcher.rb",
@@ -14,17 +15,16 @@ module SearchApp
 
       while true
         print_instructions
-        input = get_input
+        option = get_input
 
-        case input
+        case option
         when SEARCH_OPTION
-          puts "search"
-          puts ""
+          get_search_input
         when LIST_OPTION
           print_search_fields
         when QUIT_OPTION
           print_goodbye
-          break
+          exit
         else
           puts "wrong"
           puts ""
@@ -68,6 +68,58 @@ module SearchApp
       puts "  * Press 2 to view a list of searchable fields"
       puts "  * Type 'quit' to close Zendesk Search"
       puts ""
+    end
+
+    def get_search_input
+      puts "Select 1) Users or 2) Tickets or 3) Organisations"
+
+      option = get_input
+      factory = factory_for(option)
+
+      unless factory.nil?
+        searcher = SearchableFactory.for(factory)
+
+        puts "Enter search term"
+        field = get_input
+
+        puts "Enter search value"
+        value = get_input
+
+        puts "Searching #{searcher.model_name.downcase}s for #{field} with a value of #{value}"
+        results = searcher.search(field, value).map { |r| searcher.find_associations(r) }
+
+        if results.any?
+          print_divider
+          print_results(results)
+          puts ""
+        else
+          puts "No results found"
+          puts ""
+        end
+      else
+        puts "Invalid parameters"
+      end
+    end
+
+    def print_results(results)
+      results.each do |result|
+        result.each do |key, value|
+          puts sprintf("%-20s%s", key, value)
+        end
+      end
+    end
+
+    def factory_for(option)
+      case option
+      when SEARCH_USER
+        :user
+      when SEARCH_TICKET
+        :ticket
+      when SEARCH_ORGANISATION
+        :organisation
+      else
+        nil
+      end
     end
 
     def print_search_fields
