@@ -101,6 +101,7 @@ module SearchApp
       end
     end
 
+    # Could probably break this out into a presenter class of sorts.
     def print_results(results)
       results.each do |result|
         result.each do |key, value|
